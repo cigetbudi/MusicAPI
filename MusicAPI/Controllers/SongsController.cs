@@ -58,6 +58,7 @@ namespace MusicAPI.Controllers
             {
                 song.Title = newSong.Title;
                 song.Language = newSong.Language;
+                song.Duration = newSong.Duration;
                 await _db.SaveChangesAsync();
                 return Ok("Data telah berhasil dirubah");
             }
