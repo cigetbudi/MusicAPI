@@ -54,6 +54,9 @@ namespace MusicAPI.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var song = _db.Songs.Find(id);
+            _db.Songs.Remove(song);
+            _db.SaveChanges();
         }
     }
 }
