@@ -25,5 +25,11 @@ namespace MusicAPI.Controllers
         {
             songs.Add(song);
         }
+
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] Song song)
+        {
+            songs[id] = song;
+        }
     }
 }
