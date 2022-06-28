@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MusicAPI.Data;
 using MusicAPI.Models;
 
@@ -18,16 +19,16 @@ namespace MusicAPI.Controllers
     
         // GET: api/<SongsController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(_db.Songs);
+            return Ok(await _db.Songs.ToListAsync());
         } 
 
         // GET api/<SongsController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var song = _db.Songs.Find(id);
+            var song = await _db.Songs.FindAsync(id);
             if (song == null)
             {
                 return NotFound("Lagu dengan Id tersebut tidak ditemukan");
@@ -37,18 +38,18 @@ namespace MusicAPI.Controllers
 
         // POST api/<SongsController>
         [HttpPost]
-        public IActionResult Post([FromBody] Song song)
+        public async Task<IActionResult> Post([FromBody] Song song)
         {
-            _db.Songs.Add(song);
-            _db.SaveChanges();
+            await _db.Songs.AddAsync(song);
+            await _db.SaveChangesAsync();
             return StatusCode(StatusCodes.Status201Created);
         }
 
         // PUT api/<SongsController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Song newSong)
+        public async Task<IActionResult> Put(int id, [FromBody] Song newSong)
         {
-            var song = _db.Songs.Find(id);
+            var song = await _db.Songs.FindAsync(id);
             if (song == null)
             {
                 return NotFound("Lagu dengan Id tersebut tidak ditemukan");
@@ -57,16 +58,16 @@ namespace MusicAPI.Controllers
             {
                 song.Title = newSong.Title;
                 song.Language = newSong.Language;
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 return Ok("Data telah berhasil dirubah");
             }
         }
 
         // DELETE api/<SongsController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var song = _db.Songs.Find(id);
+            var song = await _db.Songs.FindAsync(id);
             if (song ==null)
             {
                 return NotFound("Lagu dengan Id tersebut tidak ditemukan");
@@ -74,7 +75,7 @@ namespace MusicAPI.Controllers
             else
             {
                 _db.Songs.Remove(song);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 return Ok("Data telah berhasil dihapus");
             }
         }
