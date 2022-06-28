@@ -25,9 +25,10 @@ namespace MusicAPI.Controllers
 
         // GET api/<SongsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Song Get(int id)
         {
-            return "value";
+            var song = _db.Songs.Find(id);
+            return song;
         }
 
         // POST api/<SongsController>
