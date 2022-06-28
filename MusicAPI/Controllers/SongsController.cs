@@ -21,7 +21,7 @@ namespace MusicAPI.Controllers
         public IEnumerable<Song> Get()
         {
             return _db.Songs;
-        }
+        } 
 
         // GET api/<SongsController>/5
         [HttpGet("{id}")]
@@ -33,8 +33,10 @@ namespace MusicAPI.Controllers
 
         // POST api/<SongsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Song song)
         {
+            _db.Songs.Add(song);
+            _db.SaveChanges();
         }
 
         // PUT api/<SongsController>/5
