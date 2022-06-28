@@ -8,7 +8,7 @@ namespace MusicAPI.Controllers
     [ApiController]
     public class SongsController : ControllerBase
     {
-        private List<Song> songs = new List<Song>()
+        private static List<Song> songs = new List<Song>()
         {
             new Song(){Id =0, Title = "Masih", Language="Indonesia"},
             new Song(){Id =1, Title = "Setia", Language="Indonesia"},
@@ -18,6 +18,12 @@ namespace MusicAPI.Controllers
         public IEnumerable<Song> Get()
         {
             return songs;
+        }
+
+        [HttpPost]
+        public void Post([FromBody] Song song)
+        {
+            songs.Add(song);
         }
     }
 }
