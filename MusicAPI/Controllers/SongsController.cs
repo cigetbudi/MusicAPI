@@ -18,45 +18,47 @@ namespace MusicAPI.Controllers
     
         // GET: api/<SongsController>
         [HttpGet]
-        public IEnumerable<Song> Get()
+        public IActionResult Get()
         {
-            return _db.Songs;
+            return Ok(_db.Songs);
         } 
 
         // GET api/<SongsController>/5
         [HttpGet("{id}")]
-        public Song Get(int id)
+        public IActionResult Get(int id)
         {
             var song = _db.Songs.Find(id);
-            return song;
+            return Ok(song);
         }
 
         // POST api/<SongsController>
         [HttpPost]
-        public void Post([FromBody] Song song)
+        public IActionResult Post([FromBody] Song song)
         {
             _db.Songs.Add(song);
             _db.SaveChanges();
+            return StatusCode(StatusCodes.Status201Created);
         }
 
         // PUT api/<SongsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Song newSong)
+        public IActionResult Put(int id, [FromBody] Song newSong)
         {
             var song = _db.Songs.Find(id);
-            //song = newSong;
             song.Title = newSong.Title;
             song.Language = newSong.Language;
             _db.SaveChanges();
+            return Ok("Data telah berhasil dirubah");
         }
 
         // DELETE api/<SongsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             var song = _db.Songs.Find(id);
             _db.Songs.Remove(song);
             _db.SaveChanges();
+            return Ok("Data telah berhasil dihapus");
         }
     }
 }
