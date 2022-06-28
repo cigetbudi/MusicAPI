@@ -28,6 +28,10 @@ namespace MusicAPI.Controllers
         public IActionResult Get(int id)
         {
             var song = _db.Songs.Find(id);
+            if (song == null)
+            {
+                return NotFound("Lagu dengan Id tersebut tidak ditemukan");
+            }
             return Ok(song);
         }
 
@@ -45,10 +49,17 @@ namespace MusicAPI.Controllers
         public IActionResult Put(int id, [FromBody] Song newSong)
         {
             var song = _db.Songs.Find(id);
-            song.Title = newSong.Title;
-            song.Language = newSong.Language;
-            _db.SaveChanges();
-            return Ok("Data telah berhasil dirubah");
+            if (song == null)
+            {
+                return NotFound("Lagu dengan Id tersebut tidak ditemukan");
+            }
+            else
+            {
+                song.Title = newSong.Title;
+                song.Language = newSong.Language;
+                _db.SaveChanges();
+                return Ok("Data telah berhasil dirubah");
+            }
         }
 
         // DELETE api/<SongsController>/5
@@ -56,9 +67,16 @@ namespace MusicAPI.Controllers
         public IActionResult Delete(int id)
         {
             var song = _db.Songs.Find(id);
-            _db.Songs.Remove(song);
-            _db.SaveChanges();
-            return Ok("Data telah berhasil dihapus");
+            if (song ==null)
+            {
+                return NotFound("Lagu dengan Id tersebut tidak ditemukan");
+            }
+            else
+            {
+                _db.Songs.Remove(song);
+                _db.SaveChanges();
+                return Ok("Data telah berhasil dihapus");
+            }
         }
     }
 }
