@@ -41,8 +41,13 @@ namespace MusicAPI.Controllers
 
         // PUT api/<SongsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Song newSong)
         {
+            var song = _db.Songs.Find(id);
+            //song = newSong;
+            song.Title = newSong.Title;
+            song.Language = newSong.Language;
+            _db.SaveChanges();
         }
 
         // DELETE api/<SongsController>/5
