@@ -31,5 +31,11 @@ namespace MusicAPI.Controllers
         {
             songs[id] = song;
         }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            songs.RemoveAt(id);
+        }
     }
 }
