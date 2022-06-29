@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MusicAPI.Models;
 
 namespace MusicAPI.Data
 {
-    public class ApiDbContext : DbContext
+    public class ApiDbContext : IdentityDbContext<IdentityUser>
     {
         public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
         {
@@ -13,6 +15,7 @@ namespace MusicAPI.Data
         public DbSet<Song> Songs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Song>().HasData(
                 new Song
                 {

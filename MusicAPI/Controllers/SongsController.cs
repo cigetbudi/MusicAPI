@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MusicAPI.Data;
 using MusicAPI.Models;
@@ -44,6 +45,7 @@ namespace MusicAPI.Controllers
         }
 
         // POST api/<SongsController>
+        [Authorize(Roles = "User,Admin")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Song song)
         {
@@ -53,6 +55,7 @@ namespace MusicAPI.Controllers
         }
 
         // PUT api/<SongsController>/5
+        [Authorize(Roles = "User,Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Song newSong)
         {
@@ -72,6 +75,7 @@ namespace MusicAPI.Controllers
         }
 
         // DELETE api/<SongsController>/5
+        [Authorize(Roles = "User,Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
