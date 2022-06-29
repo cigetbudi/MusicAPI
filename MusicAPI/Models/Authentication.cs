@@ -2,6 +2,15 @@
 
 namespace MusicAPI.Models
 {
+    public class LoginModel
+    {
+        [Required(ErrorMessage = "Username wajib diisi")]
+        public string? Username { get; set; }
+
+        [Required(ErrorMessage = "Password wajib diisi")]
+        public string? Password { get; set; }
+    }
+
     public class RegisterModel
     {
         [Required(ErrorMessage = "Username wajib diisi")]
@@ -13,5 +22,11 @@ namespace MusicAPI.Models
 
         [Required(ErrorMessage = "Password wajib diisi")]
         public string? Password { get; set; }
+    }
+
+    public static class UserRoles
+    {
+        public const string Admin = "Admin";
+        public const string User = "User";
     }
 }
